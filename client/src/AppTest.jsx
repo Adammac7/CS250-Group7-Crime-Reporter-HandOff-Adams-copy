@@ -75,11 +75,24 @@ export default function AppTest() {
 
     // Save a new report
     const handleSaveReport = (reportId, formData) => {
-        setReports((prev) =>
-            prev.map((r) =>
+        setReports((prev) => {
+            const updated = prev.map((r) =>
                 r.id === reportId ? { ...r, formData } : r
-            )
-        );
+            );
+            
+            // Find the saved report to log
+            const savedReport = updated.find(r => r.id === reportId);
+            console.log('Report saved:', savedReport);
+            console.log('Report data:', {
+                id: savedReport?.id,
+                position: savedReport?.position,
+                formData: savedReport?.formData
+            });
+            console.log('Keep report? Y or N');
+            
+            return updated;
+        });
+        
         setActiveReport(null); // close modal
         
         // Track API usage for saving report (backend API call)
@@ -116,33 +129,40 @@ export default function AppTest() {
             <main className="content">
                 <section className="leftCol">
                     <div className="card reportCard">
-                        <h2>REPORT</h2>
-                        {reports.length === 0 && <p>No reports yet.</p>}
-                        {reports.map((r) => (
-                            <div key={r.id} className="reportField">
-                                <strong>Location:</strong>
-                                <span>{r.position.lat.toFixed(5)}, {r.position.lng.toFixed(5)}</span>
+                        <h2>REPORTS</h2>
+                        {reports.filter(r => r.formData).length === 0 && (
+                            <p>No saved reports yet. Create a report to see it here.</p>
+                        )}
+                        {reports.filter(r => r.formData).map((r) => (
+                            <div key={r.id} className="reportItem" style={{ marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid var(--border)' }}>
+                                <div className="reportField">
+                                    <strong>Date of Incident:</strong>
+                                    <span>{r.formData.date ? new Date(r.formData.date).toLocaleDateString() : 'N/A'}</span>
+                                </div>
+
+                                <div className="reportField">
+                                    <strong>Time:</strong>
+                                    <span>{r.formData.time ? `${r.formData.time} ${r.formData.ampm || ''}` : 'N/A'}</span>
+                                </div>
+
+                                <div className="reportField">
+                                    <strong>Type of Incident:</strong>
+                                    <span>{r.formData.incidentType && r.formData.incidentType.length > 0 
+                                        ? r.formData.incidentType.join(', ') 
+                                        : '–'}</span>
+                                </div>
+
+                                <div className="reportField">
+                                    <strong>Description of Incident:</strong>
+                                    <p className="reportDescription">{r.formData.description || 'No description provided.'}</p>
+                                </div>
+
+                                <div className="reportField">
+                                    <strong>Location:</strong>
+                                    <span>{r.position.lat.toFixed(5)}, {r.position.lng.toFixed(5)}</span>
+                                </div>
                             </div>
                         ))}
-                        <div className="reportField">
-                            <strong>Date of Incident:</strong>
-                            <span>MM/DD/YYYY</span>
-                        </div>
-
-                        <div className="reportField">
-                            <strong>Time:</strong>
-                            <span>00:00 AM/PM</span>
-                        </div>
-
-                        <div className="reportField">
-                            <strong>Type of Incident:</strong>
-                            <span>–</span>
-                        </div>
-
-                        <div className="reportField">
-                            <strong>Description of Incident:</strong>
-                            <p className="reportDescription">No description yet.</p>
-                        </div>
                     </div>
                 </section>
 
