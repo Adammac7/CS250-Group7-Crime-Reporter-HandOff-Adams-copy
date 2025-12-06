@@ -1,5 +1,7 @@
 # Crime Reporter
 ------
+This is my copy of a group project I did for CS 250 (Software Systems)
+
 ## Table of Content
 
 - [Description](#description)
@@ -36,15 +38,7 @@ npm run dev
 ## Deployed Links
 - Project will potentially be deployed on Heroku/AWS
 
-------
-## Author/Collaborators GitHub Repository:
 
-- [Charles Kim](https://github.com/kims1998): Team Lead/ Full-Stack
-- [Rachel Rogers](https://github.com/rrogers5143): Front-End/UI Developer
-- [Perfect Phanitchaleun](https://github.com/SailmanSeeulater): Back-End/Database Developer
-- [Nico ReyasBautista](https://github.com/nicoReyas): Back-End Developer
-- [Marie-Jhayne Ayroso](https://github.com/mayroso4517): Front-End/UI Developer
-- [Estephanie Fernandez](https://github.com/efernandez1121): Back-End Developer
 
 -----
 ## License:
